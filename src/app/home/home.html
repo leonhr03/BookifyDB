@@ -1,0 +1,13 @@
+
+<div [class.center]="!isSearch" class="content" >
+  <h1>BookifyDB</h1>
+  <input placeholder="search..." [(ngModel)]="search" (ngModelChange)="onSearch()"/>
+  <div [class.show]="isSearch" class="list">
+    <div *ngFor="let b of filteredBooks()">
+     <app-list-item [book]="b.title" [section]="b.section" (lend)="lendBook(b)"></app-list-item>
+    </div>
+  </div>
+  <div [class.show]="showAlert" class="alert">
+    <app-lend-alert [currentBook]="currentBook" (close)="closeAlert()"></app-lend-alert>
+  </div>
+</div>

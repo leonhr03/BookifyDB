@@ -1,0 +1,63 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.backButton{
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.card {
+  width: 80vw;
+  padding: 32px;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background:
+    linear-gradient(#fafafa, #fafafa) padding-box,
+    linear-gradient(to top right, tomato, violet) border-box;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  background: linear-gradient(to top right, tomato, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #777;
+  border-radius: 15px;
+}
+
+button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(to top right, tomato, violet);
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(to top right, violet, tomato);
+}
+
+button:active {
+  transform: scale(0.98);
+}
