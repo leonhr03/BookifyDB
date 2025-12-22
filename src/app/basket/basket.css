@@ -1,0 +1,76 @@
+.container {
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  gap: 20px;
+}
+
+.backButton{
+  position: fixed;
+  padding: 16px;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(to top right, tomato, violet);
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.card {
+  width: 80vw;
+  padding: 32px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #fafafa;
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  background: linear-gradient(to top right, tomato, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+input {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+}
+
+button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(to top right, tomato, violet);
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(to top right, violet, tomato);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+mat-icon {
+  color: #fff;
+}
+

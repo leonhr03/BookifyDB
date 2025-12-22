@@ -1,9 +1,54 @@
-<div class="container">
-  <button routerLink="" class="backButton"><- Back to Homepage</button>
-  <div class="card">
-    <h1>Add Book</h1>
-    <input [(ngModel)]="book" placeholder="book name">
-    <input [(ngModel)]="section" placeholder="section name">
-    <button (click)="addBook()">Add Book</button>
+<div class="layout">
+  <div class="sidebar">
+    <nav>
+      <ul>
+        <li><button class="navButton"  (click)="this.currentPage = 1">add books</button></li>
+        <li><button class="navButton"  (click)="this.currentPage = 2">books</button></li>
+        <li><button class="navButton"  (click)="this.currentPage = 3">basket</button></li>
+      </ul>
+
+    </nav>
+  </div>
+  <div class="container" *ngIf="currentPage === 1">
+    <div class="addBook">
+      <div class="card">
+        <h1>Add Book</h1>
+        <input [(ngModel)]="book" placeholder="book name">
+        <input [(ngModel)]="section" placeholder="section name">
+        <button class="Addbutton" (click)="addBook()">Add Book</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="listContainer" *ngIf="currentPage === 2 || currentPage === 3">
+    <div class="books" *ngIf="currentPage === 2">
+      <h1>Books</h1>
+      <div class="list">
+        <div class="item" *ngFor="let b of books">
+          <div class="textContainer">
+            <h1>{{b.title}}</h1>
+            <p>{{b.section}}</p>
+          </div>
+          <div class="buttonContainer">
+            <button class="button" (click)="deleteBook(b)">delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="books" *ngIf="currentPage === 3">
+      <h1>Basket</h1>
+      <div class="list">
+        <div class="item" *ngFor="let b of basket">
+          <div class="textContainer">
+            <h1>{{b.title}}</h1>
+            <p>{{b.writer}}</p>
+          </div>
+          <div class="buttonContainer">
+            <button class="button" (click)="bought(b)">bought</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

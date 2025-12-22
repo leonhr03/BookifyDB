@@ -17,11 +17,20 @@ export class LendAlert {
   @Input() currentBook: string = "";
 
   @Output() close = new EventEmitter<void>();
+  @Output() saved = new EventEmitter<void>();
 
   async onSave() {
-    let newLend = `${this.name} - ${this.class}`
-    const {error} = await supabase.from('books').update({lend: `${newLend}`}).eq('title', this.currentBook);
+    let newLend = `${this.name} - ${this.class}`;
+
+    const { error } = await supabase
+      .from('books')
+      .update({ lend: newLend })
+      .eq('title', this.currentBook);
+
     if (error) console.error(error);
+
+
+    this.saved.emit();
     this.close.emit();
   }
 

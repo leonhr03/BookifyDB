@@ -1,0 +1,9 @@
+<div class="container">
+  <button routerLink="" class="backButton"><mat-icon>arrow_back</mat-icon></button>
+  <div class="card">
+    <h1>Add Book To Basket</h1>
+    <input [(ngModel)]="book" placeholder="book name">
+    <input [(ngModel)]="writer" placeholder="writer name">
+    <button (click)="addToBasket()">Add Book</button>
+  </div>
+</div>

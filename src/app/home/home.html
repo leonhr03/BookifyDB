@@ -1,13 +1,59 @@
-
-<div [class.center]="!isSearch" class="content" >
+<div [class.center]="!isSearch" class="content">
   <h1>BookifyDB</h1>
-  <input placeholder="search..." [(ngModel)]="search" (ngModelChange)="onSearch()"/>
+  <input placeholder="search..." [(ngModel)]="search" (ngModelChange)="onSearch()" />
+
+
   <div [class.show]="isSearch" class="list">
-    <div *ngFor="let b of filteredBooks()">
-     <app-list-item [book]="b.title" [section]="b.section" (lend)="lendBook(b)"></app-list-item>
+    <div *ngFor="let b of filteredBooks()" class="container">
+      <div class="textContainer">
+        <h1>{{b.title}}</h1>
+        <p>{{b.section}}</p>
+
+      </div>
+      <div class="buttonContainer">
+        <button *ngIf="!b.lend" (click)="openAlert(b)" id="lendButton">lend</button>
+        <button *ngIf="b.lend" (click)="openReturn(b)" id="returnButton">lend by: {{b.lend}}</button>
+      </div>
+    </div>
+
+    <div *ngIf="filteredBooks().length === 0" class="noResults">No results found</div>
+
+    <div *ngIf="filteredBooks().length === 0" class="container">
+      <div class="textContainer">
+       <h1>{{search}}</h1>
+      </div>
+      <div class="buttonContainer">
+        <button id="returnButton">add To Basket</button>
+      </div>
     </div>
   </div>
-  <div [class.show]="showAlert" class="alert">
-    <app-lend-alert [currentBook]="currentBook" (close)="closeAlert()"></app-lend-alert>
+
+  <a class="addButton" routerLink="basket"><mat-icon>shopping_bag</mat-icon></a>
+
+  <div class="overlay" *ngIf="showAlert">
+    <div class="alert-card">
+      <h1>Lend "{{ currentBook }}"</h1>
+      <input [(ngModel)]="lendName" placeholder="Name" />
+      <button (click)="saveLend()">Save</button>
+      <button (click)="closeAlert()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="overlay" *ngIf="showCodeAlert">
+    <div class="alert-card">
+      <h1>Your Lendcode</h1>
+      <p>please remember it!</p>
+      <h2 class="code">{{ lendCode }}</h2>
+      <button (click)="closeCodeAlert()">Close</button>
+    </div>
+  </div>
+
+  <div class="overlay" *ngIf="showReturnAlert">
+    <div class="alert-card" (click)="$event.stopPropagation()">
+      <h1>return "{{ currentBook }}"</h1>
+      <input [(ngModel)]="returnCode" placeholder="Return Code" />
+      <button (click)="saveReturn()">Return</button>
+      <button (click)="closeReturnAlert()">Cancel</button>
+    </div>
   </div>
 </div>
