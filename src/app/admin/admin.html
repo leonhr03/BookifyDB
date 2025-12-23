@@ -1,4 +1,15 @@
-<div class="layout">
+<div class="layout" *ngIf="!isLogIn">
+  <div class="loginContainer">
+    <div class="card">
+      <h1>Login</h1>
+      <input [(ngModel)]="loginCode" placeholder="Login Code">
+      <button class="Addbutton" (click)="logIn()">Login</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="layout" *ngIf="isLogIn">
   <div class="sidebar">
     <nav>
       <ul>
@@ -33,6 +44,10 @@
             <button class="button" (click)="deleteBook(b)">delete</button>
           </div>
         </div>
+
+        <div class="noResults" *ngIf="books.length === 0">
+          No books found
+        </div>
       </div>
     </div>
 
@@ -42,11 +57,15 @@
         <div class="item" *ngFor="let b of basket">
           <div class="textContainer">
             <h1>{{b.title}}</h1>
-            <p>{{b.writer}}</p>
+            <p>{{b.section}}</p>
           </div>
           <div class="buttonContainer">
             <button class="button" (click)="bought(b)">bought</button>
           </div>
+        </div>
+
+        <div class="noResults" *ngIf="basket.length === 0">
+          No books in basket
         </div>
       </div>
     </div>

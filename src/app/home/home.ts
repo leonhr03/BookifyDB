@@ -18,7 +18,7 @@ import {RouterLink} from '@angular/router';
   standalone: true
 })
 export class Home {
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
   search: any = "";
   isSearch: boolean = false;
   books: any = [];
@@ -29,6 +29,9 @@ export class Home {
   showReturnAlert: boolean = false;
   lendCode = "";
   showCodeAlert: boolean = false;
+  addToBasketAlert: boolean = false;
+  writer: string = "";
+  book: string = "";
 
   ngOnInit() {
     this.loadBooks()
@@ -80,9 +83,7 @@ export class Home {
   }
 
   openReturn(book: any) {
-    console.log('openReturn', book?.title, 'lend:', book?.lend);
     this.currentBook = book?.title ?? null;
-    this.returnCode = '';
     this.showReturnAlert = true;
   }
 
@@ -99,7 +100,7 @@ export class Home {
 
     this.closeAlert();
     this.openCodeAlert();
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
 
     const { error } = await supabase
       .from('books')
@@ -144,13 +145,22 @@ export class Home {
 
     this.returnCode = '';
     this.currentBook = '';
+    this.closeReturnAlert();
+    this.cdr.detectChanges();
 
-    this.showReturnAlert = false;
-
-    this.cd.detectChanges();
   }
 
   closeReturnAlert() {
     this.showReturnAlert = false;
+    this.cdr.detectChanges();
+  }
+
+  async addToBasket() {
+    await supabase.from("basket").insert([{title: this.search, writer: this.writer}])
+    this.writer = "";
+    this.addToBasketAlert = false;
+    this.search = "";
+    this.isSearch = false;
+    this.cdr.detectChanges();
   }
 }

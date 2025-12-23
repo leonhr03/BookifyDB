@@ -18,9 +18,10 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './basket.css',
 })
 export class Basket{
+  constructor(private cdr: ChangeDetectorRef) {}
   basket: any[] = [];
   book: string = "";
-  writer: string = "";
+  section: string = "";
 
    ngOnInit() {
     this.loadBasket();
@@ -32,15 +33,19 @@ export class Basket{
   }
 
   async addToBasket() {
-    if (this.book && this.writer) {
+    if (this.book && this.section) {
 
       const {error: insertError} = await supabase.from('basket')
-        .insert({title: this.book, writer: this.writer});
+        .insert({title: this.book, section: this.section});
 
       if (insertError) alert("Book is already on the List");
 
+
       this.book = "";
-      this.writer = "";
+      this.section = "";
+
+      this.cdr.detectChanges();
+
 
       await this.loadBasket();
     }

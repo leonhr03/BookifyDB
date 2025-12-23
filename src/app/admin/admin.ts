@@ -20,11 +20,19 @@ export class Admin {
   section: string = "";
   books: { title: string, section: string }[] = [];
   basket: any[] = [];
+  isLogIn: boolean = false;
+  loginCode: string = "";
 
-  async ngOnInit() {
-    await this.loadBooks();
-    await this.loadBasket();
-    this.cdr.detectChanges();
+  logIn() {
+    if (this.loginCode ==  "1234") {
+      this.isLogIn = true;
+      this.loadBasket()
+      this.loadBooks();
+      this.cdr.detectChanges();
+    }
+    else{
+      alert("falscher code");
+    }
   }
 
   async loadBooks() {
@@ -48,16 +56,13 @@ export class Admin {
       .from('books')
       .insert([{ title: this.book, section: this.section }]);
 
-    if (!error && data) {
-      this.books.push(data[0]);
-      this.cdr.detectChanges();
-    } else {
-      alert("Fehler beim Hochladen");
-      console.error(error);
-    }
+    const {data: insertData } = await supabase.from('books').select('*')
+    this.books = insertData ?? [];
 
     this.book = "";
     this.section = "";
+
+    this.cdr.detectChanges();
   }
 
   async deleteBook(book: any) {
@@ -70,6 +75,19 @@ export class Admin {
     await supabase.from('basket').delete().eq('title', book.title);
     this.basket = this.basket.filter(b => b.title !== book.title);
 
+    this.book = book.title;
+    this.section = book.section;
+
+    const { data, error } = await supabase
+      .from('books')
+      .insert([{ title: this.book, section: this.section }]);
+
+      const {data: insertData } = await supabase.from('books').select('*')
+      this.books = insertData ?? [];
+
+
     this.cdr.detectChanges();
   }
+
+
 }

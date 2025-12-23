@@ -23,7 +23,7 @@
        <h1>{{search}}</h1>
       </div>
       <div class="buttonContainer">
-        <button id="returnButton">add To Basket</button>
+        <button id="returnButton" (click)="addToBasketAlert = true">add To Basket</button>
       </div>
     </div>
   </div>
@@ -54,6 +54,16 @@
       <input [(ngModel)]="returnCode" placeholder="Return Code" />
       <button (click)="saveReturn()">Return</button>
       <button (click)="closeReturnAlert()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="overlay" *ngIf="addToBasketAlert">
+    <div class="alert-card">
+      <h1>add to basket</h1>
+      <input [(ngModel)]="search" placeholder="Title" />
+      <input [(ngModel)]="writer" placeholder="Writer" />
+      <button (click)="addToBasket()">add to basket</button>
+      <button (click)="addToBasketAlert = false" id="returnButton">Cancel</button>
     </div>
   </div>
 </div>
