@@ -35,11 +35,11 @@
     </div>
   </div>
 
-  <div class="listContainer" *ngIf="currentPage === 2 || currentPage === 3">
+  <div class="listContainer" *ngIf="currentPage === 2 || currentPage === 3 || currentPage === 4">
     <div class="books" *ngIf="currentPage === 2">
       <h1>Books</h1>
       <div class="list">
-        <div class="item" *ngFor="let b of books">
+        <div class="item" *ngFor="let b of books" (click)="this.currentBook = b.title; this.currentPage = 4; this.loadCourse()">
           <div class="textContainer">
             <h1>{{b.title}}</h1>
             <p>{{b.section}}</p>
@@ -73,5 +73,18 @@
         </div>
       </div>
     </div>
+
+    <div class="books" *ngIf="currentPage === 4">
+      <h1>{{ this.currentBook }}</h1>
+      <div class="list">
+        <div class="item" *ngFor="let name of course">
+          <div class="textContainer">
+            <h1>{{name}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>

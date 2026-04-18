@@ -107,7 +107,11 @@ export class Home implements OnInit {
 
     await update(ref(db, `books/${this.currentBook}`), {
       code: this.lendCode,
-      lend: this.lendName.trim()
+      lend: this.lendName.trim(),
+    })
+
+    await push(ref(db, `books/${this.currentBook}/course`), {
+      name: this.lendName.trim(),
     })
 
   }
@@ -148,7 +152,7 @@ export class Home implements OnInit {
   async addToBasket() {
 
     push(ref(db, `basket`), {
-      book: this.search,
+      title: this.search,
       section: this.section,
     })
     this.addToBasketAlert = false;

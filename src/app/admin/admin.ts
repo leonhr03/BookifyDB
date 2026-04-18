@@ -11,18 +11,19 @@ import {RouterLink} from '@angular/router';
     FormsModule,
     NgIf,
     NgForOf,
-    RouterLink
   ],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
 export class Admin {
   constructor(private cdr: ChangeDetectorRef) {}
-  currentPage: number = 1;
+  currentPage: 1 | 2 | 3 | 4 | undefined;
+  currentBook: string = "";
   book: string = "";
   section: string = "";
   books: { title: string, section: string }[] = [];
   basket: any[] = [];
+  course: any[] = [];
   isLogIn: boolean = false;
   loginCode: string = "";
 
@@ -93,6 +94,34 @@ export class Admin {
     this.loadBooks();
 
 
+    this.cdr.detectChanges();
+  }
+
+  async loadCourse() {
+    const booksRef = ref(db, 'books');
+
+    onValue(booksRef, snapshot => {
+      const data = snapshot.val();
+
+      const entry = Object.entries(data).find(
+        ([id, book]: any) => book.title === this.currentBook
+      );
+
+      if (entry) {
+        const [id] = entry;
+
+        const courseRef = ref(db, `books/${id}/course`);
+
+        onValue(courseRef, snap => {
+          const courseData = snap.val();
+
+          this.course = courseData
+            ? Object.values(courseData).map((item: any) => item.name)
+            : [];
+        });
+      }
+    });
+    console.log(this.course)
     this.cdr.detectChanges();
   }
 
